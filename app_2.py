@@ -1,5 +1,5 @@
 
-pip install tensorflow
+!pip install tensorflow
 # In[321]:
 import streamlit as st
 import pandas as pd
