@@ -59,7 +59,7 @@ st.markdown('''
 </style>
 ''', unsafe_allow_html=True)
 
-data = pd.read_csv('RELIANCE.NS .csv', squeeze=True)
+data = pd.read_csv('RELIANCE.NS .csv')
 
 data['Date'] = pd.to_datetime(data['Date'])
 
