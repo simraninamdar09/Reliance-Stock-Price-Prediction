@@ -3,6 +3,10 @@
 # In[321]:
 import streamlit as st
 import pandas as pd
+from keras.models import Sequential
+from keras.layers import Dense
+from keras.layers import LSTM
+from keras.layers import Dropout
 from tensorflow.keras.layers import LSTM, Dense
 # importing libraries
 import pandas as pd
