@@ -40,3 +40,4 @@ toolz
 jinja2 
 gitdb 
 zipp 
+statsmodels.graphics.tsaplots
