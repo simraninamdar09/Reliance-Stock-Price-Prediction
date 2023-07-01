@@ -169,7 +169,7 @@ test = data.tail(248)
 # Initialising the RNN
 model1 = Sequential()
 
-# Adding the first LSTM layer and some Dropout regularisation
+## Adding the first LSTM layer and some Dropout regularisation
 model1.add(LSTM(units = 30, return_sequences = True, input_shape = (train.shape[1], 1)))
 model1.add(Dropout(0.2))
 
