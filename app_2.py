@@ -21,6 +21,7 @@ import warnings
 warnings.filterwarnings('ignore')
 # For stationarity check
 from statsmodels.tsa.stattools import adfuller
+from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics import mean_squared_error
 from sklearn.metrics import mean_absolute_percentage_error
 import pickle
