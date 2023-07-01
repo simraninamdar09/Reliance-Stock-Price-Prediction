@@ -158,48 +158,37 @@ data = data.dropna()
 # Rename the columns to match Prophet's requirements
 data = data.rename(columns={'Date': 'ds', 'Treated_Price': 'y'})
 # data.head()
-# Normalize the data
-scaler = MinMaxScaler()
-scaled_data = scaler.fit_transform(data['Treated_Price'].values.reshape(-1, 1))
 
-# Split the data into train and test sets
-train_size = int(len(scaled_data) * 0.80)  # 80% for training, 20% for testing
-train_data = scaled_data[:train_size]
-test_data = scaled_data[train_size:]
-
-# Define the function to create input and output sequences for LSTM
-def create_sequences(data, sequence_length):
-    X = []
-    y = []
-    for i in range(len(data) - sequence_length):
-        X.append(data[i:i+sequence_length])
-        y.append(data[i+sequence_length])
-    return np.array(X), np.array(y)
-
-# Set the sequence length and create sequences for training
-sequence_length = 10
-X_train, y_train = create_sequences(train_data, sequence_length)
-
-# Create the LSTM model
+#Split data into all years for train and last year data for test
+train = data.head(5507)
+test = data.tail(248)
+# Initialising the RNN
 model1 = Sequential()
-model1.add(LSTM(units=50, return_sequences=True, input_shape=(sequence_length, 1)))
-model1.add(LSTM(units=50, return_sequences=False))
-model1.add(Dense(units=1))
-model1.compile(optimizer='adam', loss='mean_squared_error', metrics=['accuracy'])
 
-# Train the model
-model1.fit(X_train, y_train, epochs=30, batch_size=25)
+# Adding the first LSTM layer and some Dropout regularisation
+model.add(LSTM(units = 30, return_sequences = True, input_shape = (train.shape[1], 1)))
+model.add(Dropout(0.2))
 
-# Make predictions on the test set
-X_test, y_test = create_sequences(test_data, sequence_length)
-y_pred = model1.predict(X_test)
+# Adding a second LSTM layer and some Dropout regularisation
+model1.add(LSTM(units = 30, return_sequences = True))
+model1.add(Dropout(0.2))
 
-# Inverse scale the predictions and the actual values
-y_pred_inv = scaler.inverse_transform(y_pred.reshape(-1, 1))
-y_test_inv = scaler.inverse_transform(y_test.reshape(-1, 1))
-print(y_pred_inv)
-print(y_test_inv)
+# Adding a third LSTM layer and some Dropout regularisation
+model1.add(LSTM(units = 30, return_sequences = True))
+model1.add(Dropout(0.2))
 
+# Adding a fourth LSTM layer and some Dropout regularisation
+model1.add(LSTM(units = 30))
+model1.add(Dropout(0.2))
+
+# Adding the output layer
+model1.add(Dense(units = 1))
+
+# Compiling the RNN
+model1.compile(optimizer = 'adam', loss = 'mean_squared_error')
+
+# Fitting the RNN to the Training set
+#regressor.fit(X_train, y_train, epochs = 100, batch_size = 32)
 
 
 
