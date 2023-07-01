@@ -1,6 +1,7 @@
 tensorflow
 streamlit 
 pandas 
+seaborn
 numpy 
 pickle5 
 scikit-learn 
