@@ -167,8 +167,8 @@ test = data.tail(248)
 model1 = Sequential()
 
 # Adding the first LSTM layer and some Dropout regularisation
-model.add(LSTM(units = 30, return_sequences = True, input_shape = (train.shape[1], 1)))
-model.add(Dropout(0.2))
+model1.add(LSTM(units = 30, return_sequences = True, input_shape = (train.shape[1], 1)))
+model1.add(Dropout(0.2))
 
 # Adding a second LSTM layer and some Dropout regularisation
 model1.add(LSTM(units = 30, return_sequences = True))
