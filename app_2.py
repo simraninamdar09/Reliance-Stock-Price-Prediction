@@ -20,7 +20,7 @@ iqr = q3 - q1
 lower_bound = q1 - 1.5 * iqr
 upper_bound = q3 + 1.5 * iqr
 
-data['Close] = data['Close'].clip(lower=lower_bound, upper=upper_bound)
+data['Close'] = data['Close'].clip(lower=lower_bound, upper=upper_bound)
 
 # In[332]:
 
