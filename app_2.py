@@ -159,29 +159,7 @@ data = pd.concat([data, month_dummies], axis=1)
 data = data.drop(['Month', 'Close'], axis=1)
 data = data.dropna()
 
-st.title("Reliance Stock Price Prediction")
 
-# Sidebar input
-selected_dates = st.sidebar.date_input("Select Dates", [pd.to_datetime("2023-01-01"), pd.to_datetime("2023-02-01")])
-
-start_date, end_date = selected_dates[0], selected_dates[1]
-
-start_index = data[data['Date'] == str(start_date)].index[0]
-end_index = data[data['Date'] == str(end_date)].index[0]
-
-selected_prices = prices[start_index - window_size:end_index]
-
-# Prediction
-predicted_prices = predict_price(selected_prices)
-
-# Display actual and predicted prices
-st.subheader("Actual and Predicted Prices")
-df = pd.DataFrame({'Actual Prices': selected_prices.flatten(), 'Predicted Prices': predicted_prices})
-st.line_chart(df)
-
-# Display predicted prices table
-st.subheader("Predicted Prices Table")
-st.dataframe(df)
 
 
     
