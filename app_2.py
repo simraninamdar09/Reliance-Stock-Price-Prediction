@@ -159,41 +159,29 @@ data = pd.concat([data, month_dummies], axis=1)
 data = data.drop(['Month', 'Close'], axis=1)
 data = data.dropna()
 
-# Rename the columns to match Prophet's requirements
-data = data.rename(columns={'Date': 'ds', 'Treated_Price': 'y'})
-# data.head()
+st.title("Reliance Stock Price Prediction")
 
-#Split data into all years for train and last year data for test
-train = data.head(5507)
-test = data.tail(248)
-# Initialising the RNN
-model1 = Sequential()
+# Sidebar input
+selected_dates = st.sidebar.date_input("Select Dates", [pd.to_datetime("2023-01-01"), pd.to_datetime("2023-02-01")])
 
-## Adding the first LSTM layer and some Dropout regularisation
-model1.add(LSTM(units = 30, return_sequences = True, input_shape = (train.shape[1], 1)))
-model1.add(Dropout(0.2))
+start_date, end_date = selected_dates[0], selected_dates[1]
 
-# Adding a second LSTM layer and some Dropout regularisation
-model1.add(LSTM(units = 30, return_sequences = True))
-model1.add(Dropout(0.2))
+start_index = data[data['Date'] == str(start_date)].index[0]
+end_index = data[data['Date'] == str(end_date)].index[0]
 
-# Adding a third LSTM layer and some Dropout regularisation
-model1.add(LSTM(units = 30, return_sequences = True))
-model1.add(Dropout(0.2))
+selected_prices = prices[start_index - window_size:end_index]
 
-# Adding a fourth LSTM layer and some Dropout regularisation
-model1.add(LSTM(units = 30))
-model1.add(Dropout(0.2))
+# Prediction
+predicted_prices = predict_price(selected_prices)
 
-# Adding the output layer
-model1.add(Dense(units = 1))
+# Display actual and predicted prices
+st.subheader("Actual and Predicted Prices")
+df = pd.DataFrame({'Actual Prices': selected_prices.flatten(), 'Predicted Prices': predicted_prices})
+st.line_chart(df)
 
-# Compiling the RNN
-model1.compile(optimizer = 'adam', loss = 'mean_squared_error')
-
-# Fitting the RNN to the Training set
-#regressor.fit(X_train, y_train, epochs = 100, batch_size = 32)
-
+# Display predicted prices table
+st.subheader("Predicted Prices Table")
+st.dataframe(df)
 
 
     
