@@ -10,10 +10,9 @@ from keras.layers import LSTM, Dense
 
 # Load the data
 data = pd.read_csv('RELIANCE.NS .csv')
-data['Date'] = pd.to_datetime(data['Date'])
-
-data['Year'] = data['Date'].dt.year
-
+# converting the date column in to datetime 
+data['Date']=pd.to_datetime(data['Date'],format='%Y-%m-%d')
+data.set_index('Date')
 # Treat outliers using winsorization
 q1 = data['Cloe'].quantile(0.25)
 q3 = data['Close'].quantile(0.75)
@@ -43,27 +42,11 @@ data['Month'] = pd.to_datetime(data['Date']).dt.strftime('%b')
 data['Day'] = pd.to_datetime(data['Date']).dt.strftime("%d")
 
 
-#OHE
+month =['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'] 
 month_dummies = pd.DataFrame(pd.get_dummies(data['Month']))
 data = pd.concat([data,month_dummies],axis = 1)
 
-data=data.drop(['Month','Price'],axis=1)
-data=data.dropna()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+data=data.drop(['Month','Close'],axis=1)
 
 prices = data['Treated_Price'].values.reshape(-1, 1)
 
