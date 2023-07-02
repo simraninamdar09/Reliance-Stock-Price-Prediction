@@ -10,7 +10,62 @@ from keras.layers import LSTM, Dense
 
 # Load the data
 data = pd.read_csv('RELIANCE.NS .csv')
-prices = data['Close'].values.reshape(-1, 1)
+data['Date'] = pd.to_datetime(data['Date'])
+
+data['Year'] = data['Date'].dt.year
+
+# Treat outliers using winsorization
+q1 = data['Cloe'].quantile(0.25)
+q3 = data['Close'].quantile(0.75)
+iqr = q3 - q1
+lower_bound = q1 - 1.5 * iqr
+upper_bound = q3 + 1.5 * iqr
+
+data['Close] = data['Close'].clip(lower=lower_bound, upper=upper_bound)
+
+# In[332]:
+
+# Treat outliers using IQR method
+plt.figure(figsize=(12,8))
+q1 = data['Close'].quantile(0.25)
+q3 = data['Close'].quantile(0.75)
+iqr = q3 - q1
+lower_bound = q1 - 1.5 * iqr
+upper_bound = q3 + 1.5 * iqr
+
+data['Treated_Price'] = data['Close'].clip(lower=lower_bound, upper=upper_bound)
+
+
+
+
+#data['Year'] = pd.to_datetime(data['Date']).dt.strftime("%Y")
+data['Month'] = pd.to_datetime(data['Date']).dt.strftime('%b')
+data['Day'] = pd.to_datetime(data['Date']).dt.strftime("%d")
+
+
+#OHE
+month_dummies = pd.DataFrame(pd.get_dummies(data['Month']))
+data = pd.concat([data,month_dummies],axis = 1)
+
+data=data.drop(['Month','Price'],axis=1)
+data=data.dropna()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+prices = data['Treated_Price'].values.reshape(-1, 1)
 
 # Normalize the data
 scaler = MinMaxScaler(feature_range=(0, 1))
