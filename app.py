@@ -52,7 +52,20 @@ st.title('Stock Market Price Forecasting')
 st.write('Predicting stock prices using an LSTM model')
 
 # Slider to select the number of days to forecast
-days = st.slider('Select the number of days to forecast', 1, 365, 1)
+#days = st.slider('Select the number of days to forecast', 1, 365, 1)
+#sider to select number to months to forcast
+# Generate predictions for the next 12 months
+#months = pd.DataFrame({'Year': [2023]*12, 'Month': range(1, 13)})
+#predictions = model.predict(future_months)
+with st.sidebar:
+    st.markdown("# Reliance Stock Market Prediction")
+    user_input = st.multiselect('Please select the stock',['RELIANCE.NS'],['RELIANCE.NS'])
+
+    # user_input = st.text_input('Enter Stock Name', "ADANIENT.NS")
+    st.markdown("### Choose Date for your anaylsis")
+    START = st.date_input("From",datetime.date(2000, 1, 1))
+    END = st.date_input("To",datetime.date(2023, 12, 31))
+    bt = st.button('Submit') 
 
 if st.button('Forecast'):
     # Prepare the data for forecasting
@@ -68,7 +81,7 @@ if st.button('Forecast'):
     forecast = scaler.inverse_transform(np.array(forecast).reshape(-1, 1))
 
     # Create the forecast dataframe
-    forecast_dates = pd.date_range(start=data['Date'].iloc[-1], periods=days+1)[1:].strftime('%Y-%m-%d')
+    forecast_dates = pd.date_range(start=data['Date'].iloc[-1], periods=months+1)[1:].strftime('%Y-%m-%d')
     forecast_df = pd.DataFrame({'Date': forecast_dates, 'Forecast': forecast.flatten()})
 
     # Display the forecasted prices
