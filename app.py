@@ -54,11 +54,9 @@ st.write('Predicting stock prices using an LSTM model')
 # Slider to select the number of days to forecast
 #days = st.slider('Select the number of days to forecast', 1, 365, 1)
 # Create a calendar date picker
-days = st.date_input("Select a date")
+days = st.date_input("S")
 
-# Display the selected date
-if days:
-    st.write("Selected date:", days)
+
 
 
 if st.button('Forecast'):
