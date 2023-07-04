@@ -36,7 +36,7 @@ y_train = np.array(y_train)
 
 # Train the LSTM model
 model = create_model()
-model.fit(X_train, y_train, epochs=10, batch_size=32)
+model.fit(X_train, y_train, epochs=30, batch_size=25)
 
 # Prepare the test data
 X_test = []
