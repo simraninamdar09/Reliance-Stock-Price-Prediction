@@ -2,7 +2,6 @@ tensorflow
 streamlit 
 pandas 
 seaborn
-matplotlib.pyplot 
 numpy 
 pickle5 
 scikit-learn 
