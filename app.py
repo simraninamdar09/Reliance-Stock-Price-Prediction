@@ -51,11 +51,11 @@ y_test = np.array(y_test)
 st.title('Stock Market Price Forecasting')
 st.write('Predicting stock prices using an LSTM model')
 # Convert the 'Date' column to datetime format
-df['Date'] = pd.to_datetime(df['Date'])
+data['Date'] = pd.to_datetime(data['Date'])
 
 # Extract the month and year from the 'Date' column
-df['Month'] = df['Date'].dt.month
-df['Year'] = df['Date'].dt.year
+data['Month'] = data['Date'].dt.month
+data['Year'] = data['Date'].dt.year
 
 # Group the data by month and calculate the average closing price
 #monthly_avg = df.groupby(['Year', 'Month'])['Close'].mean().reset_index()
