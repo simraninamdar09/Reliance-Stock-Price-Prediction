@@ -67,7 +67,7 @@ if st.button('Forecast'):
     # Prepare the data for forecasting
     last_data = test_data[-1]
     forecast = []
-    for _ in range(days):
+    for _ in range(start_date,end_date):
         input_data = np.reshape(last_data, (1, 1, 1))
         prediction = model.predict(input_data)
         forecast.append(prediction[0][0])
