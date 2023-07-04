@@ -55,6 +55,7 @@ st.write('Predicting stock prices using an LSTM model')
 days = st.slider('Select the number of days to forecast', 1, 365, 1)
 
 
+
 if st.button('Forecast'):
     # Prepare the data for forecasting
     last_data = test_data[-1]
@@ -64,7 +65,7 @@ if st.button('Forecast'):
         prediction = model.predict(input_data)
         forecast.append(prediction[0][0])
         last_data = np.append(last_data[1:], prediction[0])
-
+        
     # Inverse transform the forecasted prices
     forecast = scaler.inverse_transform(np.array(forecast).reshape(-1, 1))
 
