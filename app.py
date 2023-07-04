@@ -82,15 +82,6 @@ if st.button('Forecast'):
     forecast_dates = pd.date_range(start=data['Date'].iloc[-1], periods=days+1)[1:].strftime('%Y-%m-%d')
     forecast_df = pd.DataFrame({'Date': forecast_dates, 'Forecast': forecast.flatten()})
 
-    with st.sidebar:
-    st.markdown("# Reliance Stock Market Prediction")
-    user_input = st.multiselect('Please select the stock',['RELIANCE.NS .csv'])
-
-    # user_input = st.text_input('Enter Stock Name', "ADANIENT.NS")
-    st.markdown("### Choose Date for your anaylsis")
-    START = st.date_input("From",datetime.date(2000, 1, 1))
-    END = st.date_input("To",datetime.date(2023, 12, 31))
-    bt = st.button('Submit') 
 
     
     # Display the forecasted prices
