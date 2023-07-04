@@ -53,17 +53,7 @@ st.write('Predicting stock prices using an LSTM model')
 
 # Slider to select the number of days to forecast
 days = st.slider('Select the number of days to forecast', 1, 365, 1)
-#sider to select number to months to forcast
 
-with st.sidebar:
-    st.markdown("# Reliance Stock Market Prediction")
-    user_input = st.multiselect('Please select the stock',['RELIANCE.NS .csv'])
-
-    # user_input = st.text_input('Enter Stock Name', "ADANIENT.NS")
-    st.markdown("### Choose Date for your anaylsis")
-    START = st.date_input("From",datetime.date(2000, 1, 1))
-    END = st.date_input("To",datetime.date(2023, 12, 31))
-    bt = st.button('Submit') 
 
 if st.button('Forecast'):
     # Prepare the data for forecasting
