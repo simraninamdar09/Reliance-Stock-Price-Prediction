@@ -59,7 +59,7 @@ st.write('Predicting stock prices using an LSTM model')
 #predictions = model.predict(future_months)
 with st.sidebar:
     st.markdown("# Reliance Stock Market Prediction")
-    user_input = st.multiselect('Please select the stock',['RELIANCE.NS'],['RELIANCE.NS'])
+    user_input = st.multiselect('Please select the stock',['RELIANCE.NS .csv'])
 
     # user_input = st.text_input('Enter Stock Name', "ADANIENT.NS")
     st.markdown("### Choose Date for your anaylsis")
