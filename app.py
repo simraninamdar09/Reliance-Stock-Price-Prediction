@@ -58,11 +58,11 @@ df['Month'] = df['Date'].dt.month
 df['Year'] = df['Date'].dt.year
 
 # Group the data by month and calculate the average closing price
-monthly_avg = df.groupby(['Year', 'Month'])['Close'].mean().reset_index()
+#monthly_avg = df.groupby(['Year', 'Month'])['Close'].mean().reset_index()
 
 # Train a linear regression model
-X = monthly_avg[['Year', 'Month']]
-y = monthly_avg['Close']
+X = ['Year', 'Month']
+y = ['Close']
 
 # Slider to select the number of days to forecast
 #days = st.slider('Select the number of days to forecast', 1, 365, 1)
