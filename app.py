@@ -67,6 +67,24 @@ if st.button('Forecast'):
     # Prepare the data for forecasting
     last_data = test_data[-1]
     forecast = []
+
+# Generate predictions for the selected date range
+if start_date and end_date:
+    # Filter the data based on the selected date range
+    filtered_data = monthly_avg[(monthly_avg['Date'] >= start_date) & (monthly_avg['Date'] <= end_date)]
+
+    # Extract the year and month from the filtered data
+    X_pred = filtered_data[['Year', 'Month']]
+
+    # Generate predictions for the selected date range
+    predictions = model.predict(X_pred)
+
+    # Create a DataFrame with the predicted values
+    predicted_data = pd.DataFrame({'Date': filtered_data['Date'], 'Prediction': predictions})
+
+    # Display the predicted data
+    st.write(predicted_data)
+    
     for _ in range(start_date,end_date):
         input_data = np.reshape(last_data, (1, 1, 1))
         prediction = model.predict(input_data)
