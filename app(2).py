@@ -73,4 +73,14 @@ if st.button('Forecast'):
     # Display the forecasted prices
     st.subheader(f'Forecasted Prices for the next {days} days')
     st.dataframe(forecast_df)
+    
+   # Plot the forecasted prices
+    fig, ax = plt.subplots()
+    ax.plot(data['Date'], data['Close'], label='Actual')
+    ax.plot(forecast_dates, forecast, label='Forecast')
+    ax.set_xlabel('Date')
+    ax.set_ylabel('Price')
+    ax.set_title('Forecasted Stock Prices')
+    ax.legend()
+    st.pyplot(fig)
 
