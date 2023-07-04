@@ -50,6 +50,19 @@ y_test = np.array(y_test)
 # Streamlit app
 st.title('Stock Market Price Forecasting')
 st.write('Predicting stock prices using an LSTM model')
+# Convert the 'Date' column to datetime format
+df['Date'] = pd.to_datetime(df['Date'])
+
+# Extract the month and year from the 'Date' column
+df['Month'] = df['Date'].dt.month
+df['Year'] = df['Date'].dt.year
+
+# Group the data by month and calculate the average closing price
+monthly_avg = df.groupby(['Year', 'Month'])['Close'].mean().reset_index()
+
+# Train a linear regression model
+X = monthly_avg[['Year', 'Month']]
+y = monthly_avg['Close']
 
 # Slider to select the number of days to forecast
 #days = st.slider('Select the number of days to forecast', 1, 365, 1)
