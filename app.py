@@ -57,7 +57,7 @@ st.write('Predicting stock prices using an LSTM model')
 days = st.date_input("Select a date")
 
 # Display the selected date
-if selected_date:
+if days:
     st.write("Selected date:", days)
 
 
