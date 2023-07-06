@@ -101,7 +101,7 @@ if st.button('Forecast'):
 
     # Create the forecast dataframe
     forecast_dates = pd.date_range(start=data['Date'].iloc[-1], periods=days+1)[1:].strftime('%Y-%m-%d')
-    forecast_df = pd.DataFrame({'Date': forecast_dates, 'Close': forecast.flatten(),'Volume':forecast.flatten()})
+    forecast_df = pd.DataFrame({'Date': forecast_dates, 'Close': forecast.flatten(),'Volume': forecast_volume.flatten()})
 
     # Display the forecasted prices
     st.subheader(f'Forecasted Prices for the next {days} days')
