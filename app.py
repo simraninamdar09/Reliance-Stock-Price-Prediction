@@ -102,7 +102,7 @@ forecast_volume = []
 for _ in range(days):
     input_data = np.reshape(last_data, (1, 1, 1))
     prediction = model.predict(input_data)
-    forecast.append(prediction[0][0])
+    forecast_volume.append(prediction[0][0])
     last_data = np.append(last_data[1:], prediction[0])
         
 
