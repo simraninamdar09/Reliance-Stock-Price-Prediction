@@ -96,9 +96,20 @@ if st.button('Forecast'):
         forecast.append(prediction[0][0])
         last_data = np.append(last_data[1:], prediction[0])
 
+     # Prepare the data for forecasting
+     last_data = test_data[-1]
+     forecast_volume = []
+     for _ in range(days):
+        input_data = np.reshape(last_data, (1, 1, 1))
+        prediction = model.predict(input_data)
+        forecast.append(prediction[0][0])
+        last_data = np.append(last_data[1:], prediction[0])
+
+
     # Inverse transform the forecasted prices
     forecast = scaler.inverse_transform(np.array(forecast).reshape(-1, 1))
-
+    forecast_volume = scaler.inverse_transform(np.array(forecast_volume).reshape(-1, 1))
+    
     # Create the forecast dataframe
     forecast_dates = pd.date_range(start=data['Date'].iloc[-1], periods=days+1)[1:].strftime('%Y-%m-%d')
     forecast_df = pd.DataFrame({'Date': forecast_dates, 'Close': forecast.flatten(),'Volume': forecast_volume.flatten()})
