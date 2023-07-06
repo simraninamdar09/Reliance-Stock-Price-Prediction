@@ -18,12 +18,7 @@ def create_model():
 # Load and preprocess the data
 data = pd.read_csv('RELIANCE.NS .csv')  # Replace with your own dataset
 data['Date'] = pd.to_datetime(data['Date'])
-
 data['Year'] = data['Date'].dt.year
-
-# Generate box plots for each year
-sns.boxplot(data=data, x='Year', y='Close')
-
 # Treat outliers using winsorization
 q1 = data['Close'].quantile(0.25)
 q3 = data['Close'].quantile(0.75)
@@ -31,7 +26,6 @@ iqr = q3 - q1
 lower_bound = q1 - 1.5 * iqr
 upper_bound = q3 + 1.5 * iqr
 data['Close'] = data['Close'].clip(lower=lower_bound, upper=upper_bound)
-
 # Treat outliers using IQR method
 q1 = data['Close'].quantile(0.25)
 q3 = data['Close'].quantile(0.75)
@@ -39,6 +33,21 @@ iqr = q3 - q1
 lower_bound = q1 - 1.5 * iqr
 upper_bound = q3 + 1.5 * iqr
 data['Treated_Price'] = data['Close'].clip(lower=lower_bound, upper=upper_bound)
+
+# Treat outliers using winsorization
+q1 = data['Volume'].quantile(0.25)
+q3 = data['Volume'].quantile(0.75)
+iqr = q3 - q1
+lower_bound = q1 - 1.5 * iqr
+upper_bound = q3 + 1.5 * iqr
+data['Volume'] = data['Volume'].clip(lower=lower_bound, upper=upper_bound)
+# Treat outliers using IQR method
+q1_v = data['Volume'].quantile(0.25)
+q3_v = data['Volume'].quantile(0.75)
+iqr = q3_v - q1_v
+lower_bound = q1_v - 1.5 * iqr
+upper_bound = q3_v + 1.5 * iqr
+data['Treated_Volume'] = data['Volume'].clip(lower=lower_bound, upper=upper_bound)
 
 scaler = MinMaxScaler(feature_range=(0, 1))
 scaled_data = scaler.fit_transform(data['Treated_Price'].values.reshape(-1, 1))
@@ -92,7 +101,7 @@ if st.button('Forecast'):
 
     # Create the forecast dataframe
     forecast_dates = pd.date_range(start=data['Date'].iloc[-1], periods=days+1)[1:].strftime('%Y-%m-%d')
-    forecast_df = pd.DataFrame({'Date': forecast_dates, 'Close': forecast.flatten()})
+    forecast_df = pd.DataFrame({'Date': forecast_dates, 'Close': forecast.flatten(),'Volume':forcast.flatten()})
 
     # Display the forecasted prices
     st.subheader(f'Forecasted Prices for the next {days} days')
