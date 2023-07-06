@@ -68,7 +68,7 @@ y_train = np.array(y_train)
 
 # Train the LSTM model
 model = create_model()
-model.fit(X_train, y_train, epochs=10, batch_size=32)
+model.fit(X_train, y_train, epochs=30, batch_size=25)
 
 # Prepare the test data
 X_test = []
@@ -108,12 +108,4 @@ if st.button('Forecast'):
     st.subheader(f'Forecasted Prices for the next {days} days')
     st.dataframe(forecast_df)
 
-    # Plot the forecasted prices
-    fig, ax = plt.subplots()
-    ax.plot(data['Date'], data['Treated_Price'], label='Actual')
-    ax.plot(forecast_dates, forecast, label='Forecast')
-    ax.set_xlabel('Date')
-    ax.set_ylabel('Price')
-    ax.set_title('Forecasted Stock Prices')
-    ax.legend()
-    st.pyplot(fig)
+    
