@@ -110,7 +110,7 @@ if st.button('Forecast'):
 
     # Plot the forecasted prices
     fig, ax = plt.subplots()
-    ax.plot(data['Date'], data['Close'], label='Actual')
+    ax.plot(data['Date'], data['Treated_Price'], label='Actual')
     ax.plot(forecast_dates, forecast, label='Forecast')
     ax.set_xlabel('Date')
     ax.set_ylabel('Price')
