@@ -97,7 +97,6 @@ if st.button('Forecast'):
         last_data = np.append(last_data[1:], prediction[0])
 
 
-
     # Inverse transform the forecasted prices
     forecast = scaler.inverse_transform(np.array(forecast).reshape(-1, 1))
     
