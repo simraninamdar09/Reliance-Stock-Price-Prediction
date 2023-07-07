@@ -87,7 +87,7 @@ if st.button('Forecast'):
     
     # Create the forecast dataframe
     forecast_dates = pd.date_range(start=data['Date'].iloc[-1], periods=days+1)[1:].strftime('%Y-%m-%d')
-    forecast_df = pd.DataFrame({'Date': forecast_dates, 'Treated_Price': forecast.flatten()})
+    forecast_df = pd.DataFrame({'Date': forecast_dates, 'Close': forecast.flatten()})
 
     # Display the forecasted prices
     st.subheader(f'Forecasted Prices for the next {days} days')
@@ -95,12 +95,13 @@ if st.button('Forecast'):
 
    # Plot the forecasted prices
     fig, ax = plt.subplots()
-    ax.plot(data['Date'], data['Treated_Price'], label='Actual')
-    ax.plot(forecast_dates, forecast, label='Forecast')
-    ax.set_xlabel('Date')
-    ax.set_ylabel('Price')
-    ax.set_title('Forecasted Stock Prices')
-    ax.legend()
+    #ax.plot(data['Date'], data['Treated_Price'], label='Actual')
+    #ax.plot(forecast_dates, forecast, label='Forecast')
+    #ax.set_xlabel('Date')
+    #ax.set_ylabel('Price')
+    #ax.set_title('Forecasted Stock Prices')
+    #ax.legend()
+    new_var[['Date',"Treated_Price"]].reset_index(drop=True).plot()
     st.pyplot(fig)
 
     
