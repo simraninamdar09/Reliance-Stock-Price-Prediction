@@ -32,10 +32,10 @@ q3 = data['Close'].quantile(0.75)
 iqr = q3 - q1
 lower_bound = q1 - 1.5 * iqr
 upper_bound = q3 + 1.5 * iqr
-data['Treated_Price'] = data['Close'].clip(lower=lower_bound, upper=upper_bound)
+data['Close'] = data['Close'].clip(lower=lower_bound, upper=upper_bound)
 
 scaler = MinMaxScaler(feature_range=(0, 1))
-scaled_data = scaler.fit_transform(data['Treated_Price'].values.reshape(-1, 1))
+scaled_data = scaler.fit_transform(data['Close'].values.reshape(-1, 1))
 
 # Split the data into training and test sets
 train_size = int(len(scaled_data) * 0.8)
@@ -87,7 +87,7 @@ if st.button('Forecast'):
     
     # Create the forecast dataframe
     forecast_dates = pd.date_range(start=data['Date'].iloc[-1], periods=days+1)[1:].strftime('%Y-%m-%d')
-    forecast_df = pd.DataFrame({'Date': forecast_dates, 'Close': forecast.flatten()})
+    forecast_df = pd.DataFrame({'Date': forecast_dates, 'Forcast': forecast.flatten()})
 
     # Display the forecasted prices
     st.subheader(f'Forecasted Prices for the next {days} days')
@@ -95,13 +95,12 @@ if st.button('Forecast'):
 
    # Plot the forecasted prices
     fig, ax = plt.subplots()
-    #ax.plot(data['Date'], data['Treated_Price'], label='Actual')
-    #ax.plot(forecast_dates, forecast, label='Forecast')
-    #ax.set_xlabel('Date')
-    #ax.set_ylabel('Price')
-    #ax.set_title('Forecasted Stock Prices')
-    #ax.legend()
-    new_var[['Date',"Treated_Price"]].reset_index(drop=True).plot()
+    ax.plot(data['Date'], data['Close'], label='Actual')
+    ax.plot(forecast_dates, forecast, label='Forecast')
+    ax.set_xlabel('Date')
+    ax.set_ylabel('Price')
+    ax.set_title('Forecasted Stock Prices')
+    ax.legend()
     st.pyplot(fig)
 
     
