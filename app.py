@@ -34,21 +34,6 @@ lower_bound = q1 - 1.5 * iqr
 upper_bound = q3 + 1.5 * iqr
 data['Treated_Price'] = data['Close'].clip(lower=lower_bound, upper=upper_bound)
 
-# Treat outliers using winsorization
-q1 = data['Volume'].quantile(0.25)
-q3 = data['Volume'].quantile(0.75)
-iqr = q3 - q1
-lower_bound = q1 - 1.5 * iqr
-upper_bound = q3 + 1.5 * iqr
-data['Volume'] = data['Volume'].clip(lower=lower_bound, upper=upper_bound)
-# Treat outliers using IQR method
-q1_v = data['Volume'].quantile(0.25)
-q3_v = data['Volume'].quantile(0.75)
-iqr = q3_v - q1_v
-lower_bound = q1_v - 1.5 * iqr
-upper_bound = q3_v + 1.5 * iqr
-data['Treated_Volume'] = data['Volume'].clip(lower=lower_bound, upper=upper_bound)
-
 scaler = MinMaxScaler(feature_range=(0, 1))
 scaled_data = scaler.fit_transform(data['Treated_Price'].values.reshape(-1, 1))
 
@@ -107,5 +92,15 @@ if st.button('Forecast'):
     # Display the forecasted prices
     st.subheader(f'Forecasted Prices for the next {days} days')
     st.dataframe(forecast_df)
+
+   # Plot the forecasted prices
+    fig, ax = plt.subplots()
+    ax.plot(data['Date'], data['Treated_Price'], label='Actual')
+    ax.plot(forecast_dates, forecast, label='Forecast')
+    ax.set_xlabel('Date')
+    ax.set_ylabel('Price')
+    ax.set_title('Forecasted Stock Prices')
+    ax.legend()
+    st.pyplot(fig)
 
     
